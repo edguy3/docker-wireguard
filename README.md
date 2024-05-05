@@ -139,24 +139,24 @@ To help you get started creating a container from this image you can either use 
 ### docker-compose (recommended, [click here for more info](https://docs.linuxserver.io/general/docker-compose))
 
 ```yaml
----
+version: '2.1'
 services:
   wireguard:
     image: lscr.io/linuxserver/wireguard:latest
     container_name: wireguard
     cap_add:
       - NET_ADMIN
-      - SYS_MODULE #optional
+#      - SYS_MODULE #optional
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=Etc/UTC
-      - SERVERURL=wireguard.domain.com #optional
+#      - SERVERURL=wireguard.domain.com #optional
       - SERVERPORT=51820 #optional
-      - PEERS=1 #optional
-      - PEERDNS=auto #optional
-      - INTERNAL_SUBNET=10.13.13.0 #optional
-      - ALLOWEDIPS=0.0.0.0/0 #optional
+#      - PEERS=1 #optional
+#      - PEERDNS=auto #optional
+#      - INTERNAL_SUBNET=10.13.13.0 #optional
+#      - ALLOWEDIPS=0.0.0.0/0 #optional
       - PERSISTENTKEEPALIVE_PEERS= #optional
       - LOG_CONFS=true #optional
     volumes:
@@ -164,8 +164,10 @@ services:
       - /lib/modules:/lib/modules #optional
     ports:
       - 51820:51820/udp
+      - 51820:51820
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
+      - net.ipv6.conf.all.disable_ipv6=0
     restart: unless-stopped
 ```
 
